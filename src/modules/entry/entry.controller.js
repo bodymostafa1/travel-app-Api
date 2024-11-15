@@ -1,11 +1,8 @@
 import Entries from "../../../database/models/entries.model.js"
-import User from "../../../database/models/user.model.js"
 import fs from "fs"
-import { upload } from "../../Middleware/multer.js"
 async function deleteImages(id) {
    let entry = await Entries.find({ _id: id })
    let images = entry[0].images
-   let modifiedImages
    for (let i = 0; i < images.length; i++) {
        images[i] = images[i].slice(22)
    }
@@ -17,7 +14,6 @@ async function deleteImages(id) {
    }
 }
 let addEntry = async (req, res, next) => {
-   console.log(req.files)
    if (req.files) {
       req.body.images = req.files.map((img) => {
          return img.filename

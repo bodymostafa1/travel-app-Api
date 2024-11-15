@@ -1,5 +1,4 @@
 import User from "../../../database/models/user.model.js"
-import { upload } from "../../Middleware/multer.js"
 let addUser = async(req,res,next)=>{
     let user = new User(req.body)
     await user.save()
