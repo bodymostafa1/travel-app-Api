@@ -6,7 +6,6 @@ async function deleteImages(id) {
    for (let i = 0; i < images.length; i++) {
        images[i] = images[i].slice(22)
    }
-   console.log(images)
    for (let i = 0; i < images.length; i++) {
       fs.unlink(images[i], (err) => {
          console.log(err)
@@ -34,7 +33,8 @@ let getEntry = async (req, res, next) => {
 }
 let deleteEntry = async (req, res, next) => {
    let entryId = req.params.id
-   deleteImages(entryId)
+   let entry = await Entries.findById(entryId)
+   if( entry.images != undefined) deleteImages(entryId)
    let deletedEntry = await Entries.findByIdAndDelete(entryId)
    res.json({ message: "successfull", deletedEntry })
 }
